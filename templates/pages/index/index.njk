@@ -1,36 +1,7 @@
-{% set pageName = 'index' %}
+
 {% extends "layout.njk" %}
 
 {% block content %}
-   <div am-container="">
-      <br>
-      <h2>Store</h2>
-      <br>
-      <div am-form="">
-         <p>name</p>
-         <div am-form-field="">
-            <div am-input="">
-               <input type="text" name="createTodo">
-            </div>
-            <button am-button="main" id="createTodo">createTodo</button>
-         </div>
-      </div>
-
-      <div am-table-responsive="">
-         <table am-table="" border-bottom="">
-            <caption><h2>Todos</h2></caption>
-            <thead>
-               <tr>
-                  <th>Name</th>
-               </tr>
-            </thead>
-            <tbody id="todos">
-               <tr>
-                  <td>firstTodo</td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-
+   <div id="app">
    </div>
 {% endblock %}

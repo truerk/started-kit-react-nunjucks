@@ -16,15 +16,15 @@ module.exports = merge(config, {
             },
             canPrint: true
         }),
-        new CompressionPlugin({
-            test: /\.(js|css)(\?.*)?$/i,
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            compressionOptions: {
-               level: 6,
-               numiterations: 15
-            }
-        }),
+        // new CompressionPlugin({
+        //     test: /\.(js|css)(\?.*)?$/i,
+        //     filename: '[path].gz[query]',
+        //     algorithm: 'gzip',
+        //     compressionOptions: {
+        //        level: 6,
+        //        numiterations: 15
+        //     }
+        // }),
     ],
     optimization: {
         minimize: true

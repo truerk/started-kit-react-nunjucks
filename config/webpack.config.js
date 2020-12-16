@@ -8,9 +8,9 @@ const nunjucksFilters           = require('nunjucks-template-loader/filters');
 const PATHS = {
     src: path.resolve(__dirname, '../src'),
     dist: path.resolve(__dirname, '../dist'),
-    templates: path.resolve(__dirname, '../templates'),
-    templatesGlob: path.resolve(__dirname, '../templates/pages/**/'),
-    pages: path.resolve(__dirname, '../templates/pages'),
+    templateGlobPath: path.resolve(__dirname, '../templates/**/'),
+    pagesGlobPath: path.resolve(__dirname, '../templates/pages/**/'),
+    pagesPath: path.resolve(__dirname, '../templates/pages'),
     assets: 'assets',
     bundles: 'bundles'
 }
@@ -20,7 +20,19 @@ module.exports = {
         paths: PATHS
     },
     entry: {
-        "index": [
+        // vendors for chunks inject
+        helloWorldForStore: [
+            `${PATHS.src}/js/helloWorldForStore.js`,
+        ],
+        helloWorldForIndex: [
+            `${PATHS.src}/js/helloWorldForIndex.js`,
+        ],
+        // pages
+        index: [
+            `${PATHS.src}/js/react/index.jsx`,
+            `${PATHS.src}/scss/index.js`,
+        ],
+        store: [
             `${PATHS.src}/js/index.js`,
             `${PATHS.src}/scss/index.js`,
         ]
@@ -33,7 +45,8 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
         alias: {
-            '@': path.resolve(__dirname, '../src/js'),
+            '@ui': path.resolve(__dirname, '../node_modules/pobeda-ui/src/ui/js'),
+            '@utils': path.resolve(__dirname, '../node_modules/pobeda-ui/src/ui/utils'),
         }
     },
     module: {
@@ -134,12 +147,11 @@ module.exports = {
                     {
                         loader: 'nunjucks-template-loader',
                         options: {
-                            paths: path.resolve(__dirname, '../templates/**/'),
+                            paths: PATHS.templateGlobPath,
                             filters: nunjucksFilters,
                             data: {
-                                index: {
-                                    foo: 'indexBar'
-                                }
+                                title: 'projectTitle',
+                                foo: 'indexBar'
                             }
                         }
                     }
@@ -159,5 +171,16 @@ module.exports = {
             chunkFilename: "[id].css"
         }),
     ]
-    .concat(generateNunjucksHtml(PATHS.templatesGlob, PATHS.pages))
+    .concat(generateNunjucksHtml(PATHS.pagesGlobPath, PATHS.pagesPath, {
+        minify: false,
+        inject: true,
+        chunks: {
+            index: [
+                'helloWorldForIndex',
+            ],
+            store: [
+                'helloWorldForStore',
+            ],
+        }
+    }))
 };

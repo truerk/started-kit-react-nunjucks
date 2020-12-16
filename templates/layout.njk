@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head></head>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+</head>
 
 <body>
-    <div id="app"></div>
-    <div id="wrapper">
-        {# layout #}
+    {% include "components/header.njk" %}
+
+    <main>
         {% block content %}{% endblock %}
-        {# <h1> example filters {{ var|shorten(3) }}</h1> #}
-    </div>
+    </main>
+
+    {% include "components/footer.njk" %}
+
+    {# <h1> example filters {{ var|shorten(3) }}</h1> #}
 </body>
 </html>
